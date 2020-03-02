@@ -5,11 +5,11 @@
 </template>
 
 <script>
-import { styled } from '@egoist/vue-emotion'
+import styled from '@/styled'
 
-const Button = styled('button')`
-  color: red;
-`
+const Button = styled('button', {
+  color: 'red'
+})
 
 export default {
   components: {

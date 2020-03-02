@@ -1,15 +1,17 @@
+import { extractCritical } from 'emotion-server'
+
 export default {
   mode: 'universal',
 
-  plugins: [
-    '@/plugins/index.js',
-  ],
+  hooks: {
+    render: {
+      route(url, page) {
+        const { css, ids } = extractCritical(page.html)
+        const [before, after] = page.html.split('</head>')
+        const styleTag = `<style data-emotion-css="${ids.join(' ')}">${css}</style>`
 
-  modules: [
-    '@/modules/index.js',
-  ],
-
-  serverMiddleware: [
-    '@/createCacheMiddleware.js',
-  ],
+        page.html = `${before}${styleTag}</head>${after}`
+      },
+    },
+  },
 }
